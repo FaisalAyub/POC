@@ -1,6 +1,7 @@
 ﻿using Core.Application;
 using Core.Application.Users.UserDtos;
 using Core.Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,6 +17,7 @@ namespace Velocity.Controllers
             _repository = repositoryWrapper;
         }
 
+        [Authorize]
         [HttpGet("{id}", Name = "GetUserById")]
         public PayloadCustom<User> GetUserById(int id)
         {
@@ -26,6 +28,8 @@ namespace Velocity.Controllers
         {
             return await _repository.User.ValidateUser(request.UserId, request.Password);
         }
+
+        [Authorize]
         [HttpGet("GetEmployees")]
         public async Task<PayloadCustom<UserDto>> GetEmployees()
         {
